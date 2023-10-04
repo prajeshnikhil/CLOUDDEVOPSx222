@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Team Registration</title>
+</head>
+<body>
+    <h1>Football Team Registration</h1>
+    <form id="team-registration-form">
+        <fieldset>
+            <legend>Team Information</legend>
+            <label for="team-name">Team Name:</label>
+            <input type="text" id="team-name" name="team-name" required><br><br>
+
+            <legend>Player Information</legend>
+            <div id="player-fields">
+                <div class="player">
+                    <label for="player-name-1">Player Name:</label>
+                    <input type="text" id="player-name-1" name="player-name[]" required>
+                    <label for="player-age-1">Player Age:</label>
+                    <input type="number" id="player-age-1" name="player-age[]" required>
+                    <button type="button" class="remove-player">Remove Player</button>
+                </div>
+            </div>
+        </fieldset>
+        <br>
+        <button type="button" id="add-player">Add Player</button>
+        <button type="submit">Register Team</button>
+    </form>
+
+    <script>
+        // JavaScript code to add more player fields when clicking "Add Player"
+        document.getElementById("add-player").addEventListener("click", function() {
+            const playerFields = document.getElementById("player-fields");
+            const playerCount = playerFields.children.length;
+            
+            if (playerCount < 5) { // Limit to 5 players
+                const playerNumber = playerCount + 1;
+                const newPlayerDiv = document.createElement("div");
+                newPlayerDiv.classList.add("player");
+                newPlayerDiv.innerHTML = `
+                    <label for="player-name-${playerNumber}">Player Name:</label>
+                    <input type="text" id="player-name-${playerNumber}" name="player-name[]" required>
+                    <label for="player-age-${playerNumber}">Player Age:</label>
+                    <input type="number" id="player-age-${playerNumber}" name="player-age[]" required>
+                    <button type="button" class="remove-player">Remove Player</button>
+                `;
+                playerFields.appendChild(newPlayerDiv);
+            } else {
+                alert("You can add a maximum of 5 players.");
+            }
+        });
+
+        // JavaScript code to remove a player when clicking "Remove Player"
+        document.getElementById("player-fields").addEventListener("click", function(e) {
+            if (e.target && e.target.classList.contains("remove-player")) {
+                const playerToRemove = e.target.parentElement;
+                const playerFields = document.getElementById("player-fields");
+                playerFields.removeChild(playerToRemove);
+            }
+        });
+    </script>
+</body>
+</html>
